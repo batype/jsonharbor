@@ -1,0 +1,4 @@
+interface:
+  display_name: "JSON Harbor 拾码"
+  short_description: "在本地无损格式化和校验 JSON、提取路径并对比文档，保留每一位数字"
+  default_prompt: "使用 $jsonharbor 处理这份 JSON，按我的要求格式化、提取或对比，保留原始数字且不覆盖输入。"

@@ -1,0 +1,19 @@
+{
+  "name": "@batype/jsonharbor",
+  "version": "1.0.0",
+  "description": "A local JSON workbench and zero-dependency CLI that preserves numeric lexemes: format, validate, inspect, extract and diff.",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/engine.mjs",
+  "types": "./node/index.d.ts",
+  "exports": {".": {"types": "./node/index.d.ts", "import": "./dist/engine.mjs"}},
+  "bin": {"jsonharbor": "./bin/jsonharbor.mjs"},
+  "files": ["dist/engine.mjs", "bin/", "node/", "README.md", "LICENSE"],
+  "engines": {"node": ">=20"},
+  "scripts": {"dev": "node scripts/serve.mjs", "test": "node --test tests/*.test.mjs", "build": "node scripts/build.mjs", "prepack": "node --check dist/engine.mjs && node --check bin/jsonharbor.mjs"},
+  "publishConfig": {"access": "public", "registry": "https://registry.npmjs.org/"},
+  "repository": {"type": "git", "url": "git+https://github.com/batype/jsonharbor.git"},
+  "homepage": "https://batype.github.io/jsonharbor/",
+  "bugs": {"url": "https://github.com/batype/jsonharbor/issues"},
+  "keywords": ["json", "formatter", "lossless", "json-pointer", "diff", "cli"]
+}

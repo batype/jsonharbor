@@ -1,0 +1,6 @@
+node_modules/
+.DS_Store
+dist/jsonharbor-source.zip
+*.log
+*.tgz
+.openai/
