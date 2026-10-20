@@ -1,4 +1,5 @@
 import {parseDocument,formatNode,formatJson,minifyJson,extractJson,diffJson,walk} from './engine.mjs';
+import {compareCode} from './code-diff.mjs';
 let cachedText='',cachedDocument=null;
 const documentFor=text=>{if(!cachedDocument||cachedText!==text){cachedDocument=parseDocument(text);cachedText=text;}return cachedDocument;};
 self.onmessage=({data})=>{
@@ -9,7 +10,12 @@ self.onmessage=({data})=>{
     else if(action==='format')result=formatJson(text,options);
     else if(action==='minify')result=minifyJson(text);
     else if(action==='get')result=extractJson(text,options.pointer,options);
-    else if(action==='diff')result=diffJson(text,options.other);
+    else if(action==='diff'){
+      result={};
+      try{result.fields=diffJson(text,options.other);}catch(error){result.fieldError=error.message;}
+      try{result.code=compareCode(text,options.other,{mode:options.mode});}catch(error){result.codeError=error.message;}
+      if(!result.fields&&!result.code)throw new Error(result.codeError);
+    }
     else if(action==='search'){
       const doc=documentFor(text),needle=options.query.toLowerCase();const found=[];let total=0;
       walk(doc.root,(node,pointer)=>{
