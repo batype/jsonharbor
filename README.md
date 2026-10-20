@@ -36,16 +36,18 @@ npm run dev
 
 ## Node API / CLI
 
-当前可从 GitHub 安装；npmjs 正式发布状态以 Release 说明为准。
+已发布至 [npmjs：@batype/jsonharbor](https://www.npmjs.com/package/@batype/jsonharbor)。Node.js >=20，零运行依赖。
 
 ```sh
-npm install github:batype/jsonharbor
+npm install @batype/jsonharbor
 npx jsonharbor format input.json --indent 2 --out pretty.json
 npx jsonharbor minify input.json --out compact.json
 npx jsonharbor validate input.json
 npx jsonharbor get input.json '/projects/0/name'
 npx jsonharbor diff before.json after.json --json
 ```
+
+也可直接执行 `npx --yes --package=@batype/jsonharbor jsonharbor validate input.json`，或从 GitHub 安装 `npm install github:batype/jsonharbor#v1.0.0`。
 
 也可在仓库中直接运行 `node bin/jsonharbor.mjs`。输入省略或使用 `-` 时从 stdin 读取：
 
