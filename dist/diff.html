@@ -1,7 +1,7 @@
 <!doctype html><html lang="zh-CN"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f7fb"><meta name="color-scheme" content="light dark">
 <title>JSON Diff · 拾码 — 两份内容，一眼看清差异</title><meta name="description" content="独立 JSON Diff 工作台：输入原始与修改后的 JSON，点击对比，查看并排代码、行内高亮及字段差异。浏览器本地运行。">
-<script src="./appearance.js"></script><link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css"></head><body class="diff-page">
+<script src="./appearance.js"></script><link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css?v=diff-page-20261021"></head><body class="diff-page">
 <header><a class="brand" href="./"><span class="brand-icon">{<i>·</i>}</span><span><b>JSON Harbor</b><small>拾码 / 开源小工具 002</small></span></a><nav aria-label="主导航"><a href="./">工作台</a><a class="current" href="./diff.html" aria-current="page">JSON Diff</a></nav><div class="header-right"><span class="local"><i></i> 仅在本地处理</span><select id="appearance" aria-label="界面外观"><option value="system">◐ 跟随系统</option><option value="light">☀ 亮色</option><option value="dark">☾ 暗色</option></select><a class="github" href="./">← 返回主页</a></div></header>
 <main><section class="intro diff-intro"><div><span class="eyebrow">JSON DIFF / A CLEARER VIEW OF CHANGE</span><h1>两份内容，<em>差异一目了然。</em></h1><p>左边放原始内容，右边放修改后的内容。点击开始对比，查看每一处变化。</p></div><span class="diff-local-note">无需上传 · 保留完整数字</span></section>
 <section class="workspace diff-workspace" aria-label="JSON 对比工作台"><div class="diff-input-heading"><b>01 <span>/ 输入两份内容</span></b><div><button id="diffExampleBtn" class="text-button">载入对比示例</button><button id="swapDiffBtn" class="button">⇄ 交换两侧</button></div></div>
@@ -16,4 +16,4 @@
 
 <div class="diff-report-bar"><div id="diffSummary" class="diff-summary"></div><div><button id="copyBtn" class="text-button" disabled>复制字段差异</button><button id="diffDownloadBtn" class="text-button" disabled>↓ 导出字段差异</button></div></div><div class="workspace-foot"><span><i></i> 内容仅在当前页面内存中 · 不上传、不保存</span><span id="workerStatus">就绪</span></div></section>
 <p class="diff-page-limit">每侧最大 2 MiB · 代码最多 10000 行 · 字段报告最多 500 处。原文模式可比较编辑中的文本；字段视图要求有效且无重复键的 JSON。</p></main>
-<footer><span>JSON Harbor <i>·</i> 拾码 / JSON Diff</span><a href="./">← 返回主页</a><a href="https://github.com/batype/jsonharbor" target="_blank" rel="noopener noreferrer">MIT 开源 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script type="module" src="./diff-app.mjs"></script></body></html>
+<footer><span>JSON Harbor <i>·</i> 拾码 / JSON Diff</span><a href="./">← 返回主页</a><a href="https://github.com/batype/jsonharbor" target="_blank" rel="noopener noreferrer">MIT 开源 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script type="module" src="./diff-app.mjs?v=diff-page-20261021"></script></body></html>
