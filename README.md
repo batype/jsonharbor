@@ -2,7 +2,7 @@
 
 **让 JSON，井井有条。每一位数字，都值得保留。** 一个在浏览器本地运行的 JSON 工作台，提供相同核心的 Node API / CLI 与 AI skill。
 
-[在线工具](https://batype.github.io/jsonharbor/) · [需求分析](docs/需求分析.md) · [AI Skill](skills/jsonharbor/SKILL.md) · [MIT 许可](LICENSE)
+[在线工具](https://batype.github.io/jsonharbor/) · [独立 JSON Diff](https://batype.github.io/jsonharbor/diff.html) · [需求分析](docs/需求分析.md) · [AI Skill](skills/jsonharbor/SKILL.md) · [MIT 许可](LICENSE)
 
 ![JSON Harbor 亮色工作台](assets/preview.png)
 
@@ -20,7 +20,9 @@
 
 ## 像审代码一样比较 JSON
 
-打开「对比 DIFF」后，两侧填写原始和修改后的 JSON，点击「开始对比」。也可直接点击「对比示例」。结果在下方全宽展开：
+在主页点击「打开 JSON Diff」或「对比 DIFF ↗」，会在新标签页打开 [独立 Diff 页面](https://batype.github.io/jsonharbor/diff.html)，保留主页的编辑内容。也可以直接访问或收藏 `diff.html`。
+
+页面初始为两个空白输入框，分别填写原始和修改后的内容，再点击「开始对比」（或 ⌘ / Ctrl + Enter）。载入示例、交换两侧或修改输入后，也需要再次点击对比。结果在下方全宽展开：
 
 - **并排 / 合并 / 字段**切换；手机首次打开默认合并视图。
 - 代码显示原始与修改后行号，红色表示删除、绿色表示新增，较深背景标出行内修改范围；并排视图垂直同步滚动、水平独立滚动。
@@ -30,7 +32,9 @@
 
 代码视图每侧最多 10000 行，每页呈现 400 个对齐行，更多内容可翻段查看。对比计算有工作量上限，差异过大时明确提示按整段替换显示；不会将未精确匹配的代码标记为相同。代码视图与 Node CLI / API 的字段报告各自独立，npm 入口保持兼容。
 
-![并排代码对比](assets/preview-code-diff.png)
+![独立 JSON Diff 页面](assets/preview-diff-page.png)
+
+[查看并排代码对比](assets/preview-code-diff.png)
 
 ## 本地运行
 
