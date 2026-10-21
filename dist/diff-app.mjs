@@ -38,8 +38,20 @@ async function copy(text){if(!text){toast('暂时没有可复制的结果');retu
 function download(text,name,type='application/json'){if(!text){toast('暂时没有可导出的内容');return;}const url=URL.createObjectURL(new Blob([text],{type})),link=node('a');link.href=url;link.download=name;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);toast('已导出文件');}
 let diffGeneration=0,diffLayout=matchMedia('(max-width: 600px)').matches?'unified':'split',activeGroup=0,expandedContext=new Set(),codePage=0;
 const CODE_PAGE_SIZE=400;
+function setInputsCollapsed(collapsed){
+  const body=$('diffInputBody');body.hidden=collapsed;
+  $('diffWorkspace').classList.toggle('inputs-collapsed',collapsed);
+  $('collapsedInputSummary').hidden=!collapsed;
+  for(const id of ['toggleInputsBtn','editInputsBtn'])$(id).setAttribute('aria-expanded',String(!collapsed));
+  $('toggleInputsBtn').textContent=collapsed?'展开输入 ↓':'收起输入 ↑';
+  $('editInputsBtn').textContent=collapsed?'展开输入 / 编辑 ↑':'编辑输入 ↑';
+  if(collapsed&&body.contains(document.activeElement)&&!$('codeComparison').hidden)$('editInputsBtn').focus({preventScroll:true});
+}
+$('toggleInputsBtn').onclick=()=>setInputsCollapsed(!$('diffInputBody').hidden);
+$('editInputsBtn').onclick=()=>{setInputsCollapsed(false);$('diffInputHeading').scrollIntoView({block:'start'});source.focus({preventScroll:true});};
 function resetDiff(){
   diffGeneration++;diffResult=null;activeGroup=0;expandedContext=new Set();codePage=0;
+  setInputsCollapsed(false);
   $('codeComparison').hidden=true;$('waitingPlaceholder').hidden=false;$('copyBtn').disabled=true;
   $('compareBtn').textContent='⇄ 开始对比';$('diffDownloadBtn').disabled=true;$('diffSummary').replaceChildren();$('diffResults').replaceChildren(node('div','empty-state','内容已变化，请重新开始对比。'));
   $('codeDiffBody').replaceChildren(node('div','empty-state','粘贴两份 JSON，点击「开始对比」查看代码变化。'));
@@ -145,14 +157,15 @@ async function runComparison(scrollToResult=true){
     $('codeDiffNotice').textContent=notices.filter(Boolean).join(' ');$('codeDiffNotice').hidden=!notices.some(Boolean);
     $('diffRule').textContent=mode==='formatted'?'规范化只统一缩进，保留键顺序、字符串和数字原文；字段视图忽略键顺序。':'原文按实际文本行比较，包含空格、缩进和换行差异；字段视图使用 JSON 结构。';
     if(!model){$('codeDiffBody').replaceChildren(node('div','empty-state',result.codeError));setDiffLayout('fields');}else{if(diffLayout==='fields'&&!result.fields)setDiffLayout('split');else renderCodeDiff();}
-    updateChangeNavigation();if(scrollToResult)$('codeComparison').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
-  }catch(error){if(ticket!==diffGeneration)return;diffResult=null;setDiffLayout('split');$('codeDiffBody').replaceChildren(node('p','diff-error',`${error.message} 可切换「原文逐行」查看编辑中的代码差异。`));$('codeDiffStats').textContent='请检查输入';}
+    updateChangeNavigation();setInputsCollapsed(true);if(scrollToResult)$('codeComparison').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  }catch(error){if(ticket!==diffGeneration)return;diffResult=null;setInputsCollapsed(false);setDiffLayout('split');$('codeDiffBody').replaceChildren(node('p','diff-error',`${error.message} 可切换「原文逐行」查看编辑中的代码差异。`));$('codeDiffStats').textContent='请检查输入';}
   finally{if(ticket===diffGeneration)$('compareBtn').textContent='⇄ 开始对比';}
 }
 $('compareBtn').onclick=()=>runComparison();
 $('diffDownloadBtn').onclick=()=>{if(diffResult?.fields)download(JSON.stringify(diffResult.fields,null,2),'jsonharbor-diff.json');};
 function updateInputMeta(){
   for(const [input,id]of [[source,'beforeMeta'],[$('compareSource'),'afterMeta']])$(id).textContent=`${byteLength(input.value).toLocaleString()} B · ${input.value?input.value.split('\n').length:0} 行`;
+  $('collapsedInputSummary').textContent=`原始 ${$('beforeMeta').textContent} / 修改后 ${$('afterMeta').textContent}`;
 }
 function loadText(text){source.value=text;source.scrollTop=source.scrollLeft=0;resetDiff();updateInputMeta();}
 $('copyBtn').onclick=()=>copy(diffResult?.fields?JSON.stringify(diffResult.fields,null,2):'');
